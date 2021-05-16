@@ -106,5 +106,23 @@
     <Compile Include="ShowPosition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="BepInEx.dll" />
+    <Content Include="Bouncyrock.BouncePackage.Runtime.dll" />
+    <Content Include="Bouncyrock.TaleSpire.3rdParty.Runtime.dll" />
+    <Content Include="Bouncyrock.TaleSpire.AssetManagement.dll" />
+    <Content Include="Bouncyrock.TaleSpire.BounceTools.Runtime.dll" />
+    <Content Include="Bouncyrock.TaleSpire.DataModel.Runtime.dll" />
+    <Content Include="Bouncyrock.TaleSpire.Runtime.dll" />
+    <Content Include="Newtonsoft.Json.dll" />
+    <Content Include="Unity.Mathematics.dll" />
+    <Content Include="Unity.Postprocessing.Runtime.dll" />
+    <Content Include="Unity.TextMeshPro.dll" />
+    <Content Include="UnityEngine.CoreModule.dll" />
+    <Content Include="UnityEngine.dll" />
+    <Content Include="UnityEngine.InputLegacyModule.dll" />
+    <Content Include="UnityEngine.PhysicsModule.dll" />
+    <Content Include="UnityEngine.UI.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

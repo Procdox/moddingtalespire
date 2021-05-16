@@ -333,12 +333,16 @@ namespace ModdingTales
             ccd.UniqueId = cd.UniqueId.ToString();
             //ccd.Position = cd.Position;
             ccd.Position = new F3(cd.Position.x, cd.Position.y, cd.Position.z);
-            ccd.Rotation = new Euler(cd.Rotation.value.x, cd.Rotation.value.y, cd.Rotation.value.z, cd.Rotation.value.w);
+            //TODO: cd.Rotation is now based on unopenable bam numeric type
+            //ccd.Rotation = new Euler(cd.Rotation.value.x, cd.Rotation.value.y, cd.Rotation.value.z, cd.Rotation.value.w);
             ccd.Alias = cd.Alias;
-            ccd.AvatarThumbnailUrl = cd.AvatarThumbnailUrl;
-            ccd.Colors = cd.Colors;
+            //TODO: AvatarThumbnailUrl has moved
+            //ccd.AvatarThumbnailUrl = cd.AvatarThumbnailUrl;
+            //TODO: Colors: Color[] -> Color: Color888
+            //ccd.Colors = cd.Colors;
             ccd.Hp = cd.Hp;
-            ccd.Inventory = cd.Inventory;
+            //TODO: Inventory has moved
+            //ccd.Inventory = cd.Inventory;
             ccd.Stat0 = cd.Stat0;
             ccd.Stat1 = cd.Stat1;
             ccd.Stat2 = cd.Stat2;
@@ -442,9 +446,10 @@ namespace ModdingTales
             //BoardAssetDatabase.
             //private static BoardAssetLookup _lookup = new BoardAssetLookup();
             //new NGuid(this.boardAssetFolder.files[k].GUID)
-            var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static;
+            //var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static;
             List<CustomBoardAssetData> cbad = new List<CustomBoardAssetData>();
 
+            /*TODO: find BoardAssetData and assets
             DictionaryList<NGuid, BoardAssetData> b = (DictionaryList<NGuid, BoardAssetData>)typeof(BoardAssetDatabase).GetField("_lookup", flags).GetValue(null);
             
             foreach (BoardAssetData bad in b.Values)
@@ -462,6 +467,7 @@ namespace ModdingTales
                     seachString = bad.seachString
                 });
             }
+            */
             return JsonConvert.SerializeObject(cbad);
             //return new APIResponse("Slab Paste Queued").ToString();
         }
@@ -473,6 +479,7 @@ namespace ModdingTales
 
         public static string KillCreature(string creatureId)
         {
+            /*TODO:
             CreatureBoardAsset creatureBoardAsset;
             if (PhotonSimpleSingletonBehaviour<CreatureManager>.Instance.TryGetAsset(new NGuid(creatureId), out creatureBoardAsset))
             {
@@ -484,6 +491,8 @@ namespace ModdingTales
             {
                 return new APIResponse("Failed to delete").ToString();
             }
+            */
+            return new APIResponse("KillCreature not implemented").ToString();
         }
         
         private static string AddCreature(string[] input)
@@ -498,6 +507,7 @@ namespace ModdingTales
         public static string AddCreature(string nguid, string x, string y, string z, string scale, string alias, string hpcurr, string hpmax, string stat1curr, string stat1max,
             string stat2curr, string stat2max, string stat3curr, string stat3max, string stat4curr, string stat4max, string torch, string hidden)
         {
+            /* TODO:
             float3 pos = math.float3(float.Parse(x), float.Parse(y), float.Parse(z));
             spawnCreaturePos = pos;
 
@@ -510,6 +520,8 @@ namespace ModdingTales
             spawnCreature.Drop(math.float3(float.Parse(x), float.Parse(y), float.Parse(z)), float.Parse(y));
 
             return new APIResponse("Creature Added").ToString();
+            */
+            return new APIResponse("AddCreature not implemented").ToString();
         }
 
         private static string CreateSlab(string[] input)
@@ -719,6 +731,7 @@ namespace ModdingTales
         }
         private static void StartMove(MoveAction ma)
         {
+            /* TODO:
             PhotonSimpleSingletonBehaviour<CreatureManager>.Instance.TryGetAsset(new NGuid(ma.guid), out ma.asset);
             if (ma.useHandle)
             {
@@ -734,6 +747,7 @@ namespace ModdingTales
             ma.DestLocation = Explorer.RoundToCreatureGrid(ma.StartLocation + movePos);
             //Debug.Log("Dest: " + ma.DestLocation);
             currentActions.Add(ma);
+            */
         }
 
         private static void UpdateMove()
@@ -784,12 +798,14 @@ namespace ModdingTales
                 while (sayTextQueue.Count > 0)
                 {
                     var sayText = sayTextQueue.Dequeue();
+                    /* TODO:
                     CreatureBoardAsset creatureBoardAsset;
                     if (PhotonSimpleSingletonBehaviour<CreatureManager>.Instance.TryGetAsset(new NGuid(sayText.CreatureId), out creatureBoardAsset))
                     {
                         Creature creature = creatureBoardAsset.Creature;
                         creature.Speak(sayText.Text);
                     }
+                    */
                 }
 
                 var tbm = SingletonBehaviour<TextBubbleManager>.Instance;
@@ -859,7 +875,7 @@ namespace ModdingTales
                     Copied mostRecentCopied_LocalOnly = BoardSessionManager.Board.GetMostRecentCopied_LocalOnly();
                     if (mostRecentCopied_LocalOnly != null)
                     {
-                        slabSize = mostRecentCopied_LocalOnly.Bounds.size;
+                        slabSize = mostRecentCopied_LocalOnly.RoughBoundsInfo.TileBounds.size; //MAYBE
                         slabSizeResponse = true;
                     }
                 } else
@@ -882,7 +898,7 @@ namespace ModdingTales
         {
             if (spawnCreature != null)
             {
-                CreatureManager.AddCreature(spawnCreature.CreatureData, spawnCreaturePos, quaternion.identity);
+                CreatureManager.CreateAndAddNewCreature(spawnCreature.CreatureData, spawnCreaturePos, quaternion.identity); //MAYBE
                 spawnCreature.DeleteAsset();
                 spawnCreature = null;
             }
@@ -912,6 +928,7 @@ namespace ModdingTales
 
         private static string Knockdown(string creatureId)
         {
+            /* TODO:
             CreatureBoardAsset creatureBoardAsset;
             if (PhotonSimpleSingletonBehaviour<CreatureManager>.Instance.TryGetAsset(new NGuid(creatureId), out creatureBoardAsset))
             {
@@ -923,6 +940,8 @@ namespace ModdingTales
             {
                 return new APIResponse("Failed to emote").ToString();
             }
+            */
+            return new APIResponse("Knockdown not implemented").ToString();
         }
         private static string PlayEmote(string[] input)
         {
@@ -931,6 +950,7 @@ namespace ModdingTales
 
         private static string PlayEmote(string creatureId, string emote)
         {
+            /* TODO:
             CreatureBoardAsset creatureBoardAsset;
             if (PhotonSimpleSingletonBehaviour<CreatureManager>.Instance.TryGetAsset(new NGuid(creatureId), out creatureBoardAsset))
             {
@@ -942,6 +962,8 @@ namespace ModdingTales
             {
                 return new APIResponse("Failed to emote").ToString();
             }
+            */
+            return new APIResponse("PlayEmote not implemented").ToString();
         }
         private static string SetCreatureStat(string[] input)
         {
@@ -949,12 +971,14 @@ namespace ModdingTales
         }
         public static string SetCreatureStat(string creatureId, string statIdx, string current, string max)
         {
+            /* TODO:
             try
             {
                 List<CustomCreatureData> allCreatures = new List<CustomCreatureData>();
 
                 var board = BoardSessionManager.Board;
-
+                //TODO: probably need to grab creature id off of board asset?
+                //CreatureManager.SetCreatureStatByIndex(new NGuid(creatureId), new CreatureStat(float.Parse(current), float.Parse(max)), int.Parse(statIdx) - 1); //MAYBE
                 board.SetCreatureStatByIndex(new NGuid(creatureId), new CreatureStat(float.Parse(current), float.Parse(max)), int.Parse(statIdx) - 1);
                 SingletonBehaviour<BoardToolManager>.Instance.GetTool<CreatureMenuBoardTool>().CallUpdate();
                 return new APIResponse(String.Format("Set stat{0} to {1}:{2} for {3}", statIdx, current, max, creatureId)).ToString();
@@ -963,6 +987,8 @@ namespace ModdingTales
             {
                 return new APIResponse(ex.Message + ex.StackTrace, "Could not set stat").ToString();
             }
+            */
+            return new APIResponse("SetCreatureStat not implemented").ToString();
         }
 
         private static string GetCreatureStats(string[] input)
@@ -971,6 +997,7 @@ namespace ModdingTales
         }
         public static string GetCreatureStats(string creatureId)
         {
+            /* TODO: creatureid from board id again
             try
             {
                 CreatureData cd = BoardSessionManager.Board.GetCreatureData(new NGuid(creatureId));
@@ -987,6 +1014,8 @@ namespace ModdingTales
             {
                 return new APIResponse(ex.Message + ex.StackTrace, "Could not get hp").ToString();
             }
+            */
+            return new APIResponse("GetCreatureStats not implemented").ToString();
         }
         private static string SetCreatureHp(string[] input)
         {
@@ -994,6 +1023,7 @@ namespace ModdingTales
         }
         public static string SetCreatureHp(string creatureId, string currentHp, string maxHp)
         {
+            /* TODO:
             try
             {
                 List<CustomCreatureData> allCreatures = new List<CustomCreatureData>();
@@ -1008,6 +1038,8 @@ namespace ModdingTales
             {
                 return new APIResponse(ex.Message + ex.StackTrace, "Could not set hp").ToString();
             }
+            */
+            return new APIResponse("SetCreatureHp not implemented").ToString();
         }
 
         private static string GetCreatureList(string[] input)
@@ -1016,6 +1048,7 @@ namespace ModdingTales
         }
         public static string GetCreatureList()
         {
+            /* TODO:
             try
             {
                 List<CustomCreatureData> allCreatures = new List<CustomCreatureData>();
@@ -1034,10 +1067,13 @@ namespace ModdingTales
             {
                 return new APIResponse(ex.Message + ex.StackTrace, "Could not get creature list").ToString();
             }
+            */
+            return new APIResponse("GetCreatureList not implemented").ToString();
         }
 
         public static string GetPlayerControlledList()
         {
+            /* TODO:
             try
             {
                 List<CustomCreatureData> playerControlled = new List<CustomCreatureData>();
@@ -1061,6 +1097,8 @@ namespace ModdingTales
             {
                 return new APIResponse(ex.Message + ex.StackTrace, "Could not get player controlled list").ToString();
             }
+            */
+            return new APIResponse("GetPlayerControlledList not implemented").ToString();
         }
 
         private static string SelectCreatureByCreatureId(string[] input)
@@ -1070,6 +1108,7 @@ namespace ModdingTales
 
         public static string SelectCreatureByCreatureId(string guid)
         {
+            /* TODO:
             try
             {
                 var creatureNGuid = new NGuid(guid);
@@ -1085,6 +1124,8 @@ namespace ModdingTales
             {
                 return new APIResponse(ex.Message, "Error selecting via nguid: " + guid).ToString();
             }
+            */
+            return new APIResponse("SelectCreatureByCreatureId not implemented").ToString();
         }
         private static string SelectPlayerControlledByAlias(string[] input)
         {
@@ -1093,6 +1134,7 @@ namespace ModdingTales
 
         public static string SelectPlayerControlledByAlias(string alias)
         {
+            /* TODO:
             try
             {
 
@@ -1127,6 +1169,8 @@ namespace ModdingTales
             {
                 return new APIResponse("Failed to find alias", "Unable to select by alias: " + alias).ToString();
             }
+            */
+            return new APIResponse("SelectPlayerControlledByAlias not implemented").ToString();
         }
 
         private static string SelectNextPlayerControlled(string[] input)
@@ -1136,6 +1180,7 @@ namespace ModdingTales
 
         public static string SelectNextPlayerControlled()
         {
+            /* TODO:
             try
             {
 
@@ -1175,6 +1220,8 @@ namespace ModdingTales
             {
                 return new APIResponse(ex.Message, "Unable to select next.").ToString();
             }
+            */
+            return new APIResponse("SelectNextPlayerControlled not implemented").ToString();
         }
 
 
@@ -1200,6 +1247,7 @@ namespace ModdingTales
 
         public static TilePreviewBoardAsset GetSelectedTileAsset()
         {
+            /* TODO:
             try {
                 var test = (SingleBuilderBoardTool)SingletonBehaviour<SingleBuilderBoardTool>.Instance;
             } catch {}
@@ -1214,7 +1262,8 @@ namespace ModdingTales
             {
                 return null;
             }
-
+            */
+            return null;
         }
 
         public static TextMeshProUGUI GetUITextContainsString(string contains)

@@ -49,7 +49,7 @@ namespace ShowPosition
                         MouseManager.ShowMouseText(String.Format("{0:0}", distance), true);
 
                         TextMeshProUGUI cursorText = (TextMeshProUGUI)typeof(MouseManager).GetField("_cursorText", flags).GetValue(MouseManager.Instance);// this._cursorText
-                        cursorText.fontSize = RulerFontSize.Value * GUIManager.GetUIScaleValue();
+                        cursorText.fontSize = RulerFontSize.Value * GUIManager.Instance.UiScale;
                         wasShowingMouse = true;
                     }
                     else
